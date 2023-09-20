@@ -1,0 +1,33 @@
+Entitas:
+Pengguna: id_pengguna, nama_pengguna, email, no_hp, country
+Pembelian: id_pembelian, tanggal_pembelian, pay_method, id_pengguna
+BeliGame: id_pembelian, id_game
+Game: id_game, nama_game, tanggal_rilis, harga
+Genre: id_genre, genre
+GameGenre: id_game, id_genre
+
+Raw data:
+mysql>select * from pengguna;
+mysql>select * from pembelian;
+mysql>select * from game;
+mysql>select * from beligame;
+mysql>select * from genre;
+mysql>select * from gamegenre;
+
+Perform query:
+mysql>select nama_game, tanggal_rilis from game order by tanggal_rilis desc limit 5;
+mysql>select game.nama_game, pembelian.tanggal_pembelian from game join beligame on game.id_game=beligame.id_game join pembelian on pembelian.id_pembelian=beligame.id pembelian order by tanggal pembelian desc limit 5;
+mysql>select pengguna.nama_pengguna, count(*) from pengguna join pembelian on pengguna.id_pengguna=pembelian.id_pengguna join beligame on pembelian.id_pembelian=beligame.id_pembelian group by nama_pengguna order by count(*) asc limit 3;
+mysql>select game.nama_game, count (*) from game join beligame on game.id_game=beligame.id_game group by nama_game order by count (*) desc limit 4;
+mysql>select game.nama_game, count (*) from game join beligame on game.id_game=beligame.id_game group by nama_game order by count (*) asc limit 4;
+mysql>select game.nama_game, genre.genre from game join gamegenre on game.id_game=gamegenre.id_game join genre on genre.id_genre=gamegenre.id_genre where gamegenre.id_game in(select id_game from gamegenre where genre='action' or genre='adventure');
+mysql>select genre.genre, count (*) from genre join gamegenre on genre.id_genre=gamegenre.id_genre join beligame on gamegenre.id_game=beligame.id_game group by genre.genre order by count (*) desc limit 1;
+
+Data storytelling:
+5 latest games which can display in recommended new games: borderlands, respect, ori, melvor idle, monster hunter.
+5 last purchased games which can display in recommended games: the crew, pacman, cuphead, neighbours, gears.
+Promo notifications can be sent to the fewest game users: Ridwan Ardian, Anindya Luth, Aqilla Citrani.
+4 the most purchased games can display in best seller games: neighbours, pacman, shenmue, gears.
+4 the least purchased games can display in promo games: need for speed, tabs, portal, real politiks.
+3 action and adventure games can display in personalized recommendations for users: shenmue, gears, ori.
+the most purchased genre can display in best seller genre: action.
